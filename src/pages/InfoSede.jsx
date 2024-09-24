@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
 
+import Fondo from "../assets/portada.jpg";
+
 
 
 const InfoSede = () => {
@@ -12,7 +14,7 @@ const InfoSede = () => {
   const sede = {
     id,
     name: 'Sede Principal',
-    image: '/placeholder.svg',
+    image: Fondo,
     description: 'Nuestra sede principal, ubicada en el corazón de la ciudad.',
     details: 'Fundada en 1950, la Sede Principal ha sido el centro de excelencia académica por más de 70 años.',
     contact: '+1 234 567 890',

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/user.api";
 import { User, Lock, AlertCircle } from "lucide-react";
+import useAuthStore from "../AuthStore";
 
 const Login = ({setIsLoggedIn, setUserName }) => {
   const [username, setUsername] = useState("");
@@ -10,22 +11,26 @@ const Login = ({setIsLoggedIn, setUserName }) => {
   const navigate = useNavigate();
 
 
+  const login = useAuthStore(state => state.login); // Get the login function from the auth store
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-        const data = await loginUser(username, password);
-        if (data.access) {
-            setIsLoggedIn(true);
-            setUserName(username); // O usa el nombre real del usuario
-            localStorage.setItem('access_token', data.access); // Guarda el token
-            navigate("/homepage");
-        }
-    } catch (err) {
-        setError('Credenciales inválidas'); // Manejo de errores
-        console.error("Error al iniciar sesión:", err);
+    if (!username || !password) {
+      setError("Por favor ingresa ambos campos.");
+      return;
     }
-};
+    try {
+      const data = await loginUser(username, password);
+      if (data.access) {
+        login({ username }); // Use the login function from the store
+        localStorage.setItem('access_token', data.access); // Store the token
+        navigate("/homepage");
+      }
+    } catch (err) {
+      setError('Credenciales inválidas'); // Error handling
+      console.error("Error al iniciar sesión:", err);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

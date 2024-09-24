@@ -1,29 +1,32 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { ChevronDown, LogIn, LogOut, Menu, X } from 'lucide-react'
 import Actores from '../assets/logo1.png'
 import useAuthStore from '../AuthStore'
 
 const Navbar = () => {
-  const { isLoggedIn, user, login, logout } = useAuthStore()
+  const { isLoggedIn, user, logout } = useAuthStore()
   const [showSedes, setShowSedes] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   const sedesNav = ['', 'Sede Norte', 'Sede Sur', 'Sede Este', 'Sede Oeste']
 
   const handleLogin = () => {
-    // Simular un inicio de sesión
-    login({ name: 'Juan Doe', email: 'juan@example.com' })
+    navigate('/login')
   }
 
   const handleLogout = () => {
     logout()
+    localStorage.removeItem("access_token");
   }
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <img src={Actores} alt="Logo Universidad" className="w-32 h-10 object-contain" />
+        <img src={Actores} alt="Logo Universidad" className="w-36 h-10 object-contain" />
         
         {/* Menú para pantallas grandes */}
         <div className="hidden md:flex items-center space-x-6">
@@ -95,9 +98,9 @@ const NavItems = ({ isLoggedIn, user, onLogin, onLogout, showSedes, setShowSedes
         <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'items-center space-x-4'}`}>
           <div className="flex items-center">
             <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-2">
-              {user.name.charAt(0)}
+              {user.username.charAt(0)}
             </div>
-            <span className="text-gray-700 whitespace-nowrap">{user.name}</span>
+            <span className="text-gray-700 whitespace-nowrap">{user.username}</span>
           </div>
           <button
             onClick={onLogout}

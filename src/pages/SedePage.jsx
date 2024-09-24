@@ -1,33 +1,31 @@
 import { Plus } from 'lucide-react'
 import useAuthStore from '../AuthStore'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SedeCard from '../components/SedeCard'
 import Fondo from "../assets/portada.jpg";
+import { getSedes } from '../api/sedes.api';
+
 
 
 const SedesPage = () => {
   const { isLoggedIn } = useAuthStore()
+  const [sedes, setSedes] = useState([]);
+  const [error, setError] = useState(null);
 
-  const [sedes, setSedes] = useState([
-    {
-      id: 1,
-      name: 'Sede Principal',
-      image: Fondo,
-      description: 'Nuestra sede principal, ubicada en el corazón de la ciudad.',
-    },
-    {
-      id: 2,
-      name: 'Sede Norte',
-      image: Fondo,
-      description: 'Moderna sede con amplias instalaciones deportivas.',
-    },
-    {
-      id: 3,
-      name: 'Sede Sur',
-      image: Fondo,
-      description: 'Especializada en investigación y desarrollo tecnológico.',
-    },
-  ])
+  useEffect(() => {
+    const fetchSedes = async () => {
+      try {
+        const data = await getSedes(); // Obtiene las sedes directamente
+        console.log(data); // Verifica qué datos estás obteniendo
+        setSedes(data); // Actualiza el estado con los datos obtenidos
+      } catch (error) {
+        setError("No se pudieron cargar las sedes."); // Manejo del error
+        console.error("Error al obtener sedes:", error);
+      }
+    };
+
+    fetchSedes();
+  }, []);
 
   const handleAddSede = () => {
     // Lógica para agregar una nueva sede
@@ -48,7 +46,7 @@ const SedesPage = () => {
             {isLoggedIn && (
               <button
                 onClick={handleAddSede}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full flex items-center transition duration-300"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md flex items-center transition duration-300"
               >
                 <Plus className="mr-2" size={20} />
                 Agregar Sede
