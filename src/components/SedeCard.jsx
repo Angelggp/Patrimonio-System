@@ -12,6 +12,7 @@ const SedeCard = ({ sede, isLoggedIn, onEdit }) => {
           // alt={sede.name}
           className="w-full h-60 object-cover"
         />
+        </Link>
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
             {sede.nombre_sede}
@@ -26,7 +27,7 @@ const SedeCard = ({ sede, isLoggedIn, onEdit }) => {
             </button>
           )}
         </div>
-        </Link>
+        
       </div>
     
   );

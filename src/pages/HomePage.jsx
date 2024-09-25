@@ -5,7 +5,7 @@ import Fondo from "../assets/portada.jpg";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-white relative">
       {/* Manchas de colores de fondo */}
       <div className="fixed inset-0 flex items-center justify-center pointer-events-none opacity-20 z-0">
         <div className="w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-2xl"></div>

@@ -1,40 +1,43 @@
 import { Plus } from 'lucide-react'
-import useAuthStore from '../AuthStore'
-import { useState, useEffect } from 'react'
+import useAuthStore from '../stores/AuthStore'
+import { useEffect, useState } from 'react'
 import SedeCard from '../components/SedeCard'
-import Fondo from "../assets/portada.jpg";
-import { getSedes } from '../api/sedes.api';
+import useSedesStore from '../stores/useSedesStore'
+import SedeForm from './SedeFrom'
+import { useNavigate } from 'react-router-dom'
+import { getSedeById } from '../api/sedes.api'
 
 
 
 const SedesPage = () => {
   const { isLoggedIn } = useAuthStore()
-  const [sedes, setSedes] = useState([]);
-  const [error, setError] = useState(null);
+  const { sedes, error, fetchSedes } = useSedesStore();
+  const [currentSede, setCurrentSede] = useState(null);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
-    const fetchSedes = async () => {
-      try {
-        const data = await getSedes(); // Obtiene las sedes directamente
-        console.log(data); // Verifica qué datos estás obteniendo
-        setSedes(data); // Actualiza el estado con los datos obtenidos
-      } catch (error) {
-        setError("No se pudieron cargar las sedes."); // Manejo del error
-        console.error("Error al obtener sedes:", error);
-      }
-    };
+    fetchSedes(); // Llama a la función para obtener las sedes al montar el componente
+  }, [fetchSedes]);
 
-    fetchSedes();
-  }, []);
 
   const handleAddSede = () => {
     // Lógica para agregar una nueva sede
-    console.log('Agregar nueva sede')
+    navigate('/sedes/add')
   }
 
-  const handleEditSede = (id) => {
-    // Lógica para editar una sede
-    console.log('Editar sede', id)
+  const handleEditSede = async (id) => {
+    try {
+      const sedeToEdit = await getSedeById(id); 
+      console.log(sedeToEdit)
+      setCurrentSede(sedeToEdit); 
+    } catch (error) {
+      console.error('Error al cargar los datos de la sede:', error);
+      toast.error('Error al cargar los datos de la sede.', {
+        position: "bottom-right"
+      });
+    }
+    console.log('Editar sede', currentSede)
   }
 
   return (

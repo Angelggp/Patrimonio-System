@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/user.api";
 import { User, Lock, AlertCircle } from "lucide-react";
-import useAuthStore from "../AuthStore";
+import useAuthStore from "../stores/AuthStore";
 
-const Login = ({setIsLoggedIn, setUserName }) => {
+const Login = ({}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -33,8 +33,8 @@ const Login = ({setIsLoggedIn, setUserName }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 md:m-2">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 m-2">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
           Iniciar Sesión
         </h2>
