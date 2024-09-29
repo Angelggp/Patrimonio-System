@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,16 +9,13 @@ import HomePage from "./pages/HomePage";
 import SedesPage from "./pages/SedePage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { jwtDecode } from "jwt-decode"; // descodificar el token
 import InfoSede from "./pages/SedeInfo";
-import useAuthStore from "./stores/AuthStore";
 import SedeForm from "./pages/SedeFrom";
 import { Toaster } from "react-hot-toast";
 
 
 
 function App() {
-
   return (
     <Router>
       <div className="flex h-screen">
@@ -32,6 +28,7 @@ function App() {
               <Route path="/sedes" element={<SedesPage />} />
               <Route path="/sedes/:id" element={<InfoSede />} />
               <Route path="/sedes/add" element={<SedeForm />} />
+              <Route path="/sedes/edit/:id" element={<SedeForm />} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Navigate to="/homepage" />} />
             </Routes>

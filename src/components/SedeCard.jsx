@@ -21,7 +21,7 @@ const SedeCard = ({ sede, isLoggedIn, onEdit }) => {
           {isLoggedIn && (
             <button
               onClick={() => onEdit(sede.id)}
-              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md flex items-center transition duration-300">
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md flex items-center transition duration-300">
               <Edit className="mr-2" size={16} />
               Editar
             </button>

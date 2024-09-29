@@ -1,7 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { addSede } from '../api/sedes.api';
+import { addSede, editSede, getSedeById } from '../api/sedes.api';
 import { toast } from "react-hot-toast";
+import { Navigate, useParams } from 'react-router-dom';
 
 const SedeForm = () => {
 
@@ -18,6 +19,12 @@ const SedeForm = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const [imagePreview, setImagePreview] = useState(null);
+
+  const { id } = useParams()
+
+  const navigate = Navigate()
+
+  console.log(id, 'id de la sede a editar')
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -45,23 +52,63 @@ const SedeForm = () => {
   };
 
 
+  useEffect(() => {
+    if (id) {
+      const fetchSede = async () => {
+        try {
+          const sedeData = await getSedeById(id);
+          setFormData({
+            nombre_sede: sedeData.nombre_sede,
+            ubicacion: sedeData.ubicacion,
+            telefono: sedeData.telefono,
+            correo: sedeData.correo,
+            historia: sedeData.historia,
+            descripcion: sedeData.descripcion,
+          });
+          setImagePreview(sedeData.imagen); // Suponiendo que la URL de la imagen está en `sedeData.imagen`
+        } catch (error) {
+          console.error('Error al cargar los datos de la sede:', error);
+          toast.error('Error al cargar los datos de la sede.', {
+            position: "bottom-right"
+          });
+        }
+      };
+
+      fetchSede();
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formToSend = new FormData();
   
+  // Agrega los datos del formulario a FormData
+    Object.entries(formData).forEach(([key, value]) => {
+      formToSend.append(key, value);
+    });
+    
     try {
-      await addSede(formData); // Llama a la función para agregar la sede
-      console.log('Sede creada exitosamente');
-      setFormData(initialFormData);
-      setImagePreview(null) 
+      if (id) {
+        await editSede(id, formToSend); // Llama a la función para actualizar la sede
+        navigate('/sedes')
+        toast.success(`La Sede ${formData.nombre_sede} se actualizó correctamente en el sistema!!`, {
+          position: "bottom-right"
+        });
+      } else {
+        await addSede(formData); // Llama a la función para agregar la sede
+        toast.success(`La Sede ${formData.nombre_sede} se agregó correctamente al sistema!!`, {
+          position: "bottom-right"
+        });
+      }
 
-      toast.success(`La Sede ${formData.nombre_sede} se agregó correctamente al sistema!!`, {
-        position: "bottom-right"
-      });   
+      setFormData(initialFormData);
+      setImagePreview(null);
+      
     } catch (error) {
-      console.error('Error al crear la sede:', error);
+      console.error('Error al guardar la sede:', error);
       toast.error('Debe agregar una Imagen de la sede', {
-        position: "bottom-right"})
+        position: "bottom-right"
+      });
     }
   };
 
@@ -71,11 +118,11 @@ const SedeForm = () => {
 
   const inputClasses = "mt-1 block w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-md text-sm placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400";
 
-  const labelClasses = "block text-md font-bold text-gray-600"
+  const labelClasses = "block text-md font-bold text-gray-600";
 
   return (
     <div className="max-w-2xl mx-auto p-4 mt-20 mb-20">
-      <h2 className="text-2xl font-bold mb-4">Agregar Nueva Sede</h2>
+      <h2 className="text-2xl font-bold mb-4">{ id ? 'Editar Sede' : 'Agregar Nueva Sede'}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nombre de la Sede */}
         <div>
@@ -213,3 +260,5 @@ const SedeForm = () => {
 };
 
 export default SedeForm;
+
+
