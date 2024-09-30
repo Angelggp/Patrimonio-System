@@ -2,9 +2,11 @@ import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { addSede, editSede, getSedeById } from '../api/sedes.api';
 import { toast } from "react-hot-toast";
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const SedeForm = () => {
+
+  const navigate = useNavigate()
 
   const initialFormData = {
     nombre_sede: '',
@@ -22,7 +24,7 @@ const SedeForm = () => {
 
   const { id } = useParams()
 
-  const navigate = Navigate()
+  
 
   console.log(id, 'id de la sede a editar')
 

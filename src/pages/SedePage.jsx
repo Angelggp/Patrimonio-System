@@ -33,7 +33,7 @@ const SedesPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white relative overflow-x-hidden">
-      <div className="flex-grow container mx-auto px-4 py-12 flex flex-col items-center  min-h-screen relative z-10 mt-16">
+      <div className="flex-grow container mx-auto px-4 py-12 flex flex-col items-center min-h-screen relative z-10 mt-16">
         <div className="w-full max-w-3xl">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Nuestras Sedes</h1>

@@ -1,14 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useSedesStore from '../stores/useSedesStore'; // Asegúrate de ajustar la ruta
-import { ChevronDown } from 'lucide-react';// Asegúrate de importar el ícono que estás usando
+import useSedesStore from '../stores/useSedesStore'; 
+import { ChevronDown } from 'lucide-react';
+import { getFacultadesSede } from '../api/facultades.api';
+import useFacultadesStore from '../stores/useFacultadesStore';
 
 const InfoSede = () => {
-  const { id } = useParams(); // Obtiene el id de los parámetros de la URL
-  const { sedes } = useSedesStore(); // Obtiene el estado global de las sedes
+  const { id } = useParams(); 
+  const { sedes } = useSedesStore(); 
   const [activeTab, setActiveTab] = useState(null);
-  const [sede, setSede] = useState(null); // Estado para almacenar la sede seleccionada
-  const [error, setError] = useState(null); // Estado para manejar errores
+  const [sede, setSede] = useState(null); 
+  const [error, setError] = useState(null); 
+
+  const { facultades, fetchFacultades } = useFacultadesStore()
+
+  // const [facultades, setFacultades] = useState([])
+
+  // useEffect(() => {
+  //   const fetchFacultades = async () => {
+  //     try {
+  //       const listadoFacultades = await getFacultadesSede(id);
+  //       if (listadoFacultades && listadoFacultades.length > 0) {
+  //         setFacultades(listadoFacultades);
+          
+  //         setError(''); // Limpiar el mensaje de error si hay facultades
+  //       } else {
+  //         setError('No hay facultades asociadas a esta sede.');
+  //       }
+  //     } catch (err) {
+  //       setError('Error al obtener las facultades: ' + err.message);
+  //     }
+  //   };
+
+  //   fetchFacultades();
+  // }, [id]);
+
+  useEffect(() => {
+    const cargar = fetchFacultades(id)
+    console.log(id)
+  }, [])
+  console.log(facultades)
 
   useEffect(() => {
     // Filtra la sede correspondiente al id de la URL

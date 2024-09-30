@@ -8,8 +8,8 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-white relative">
       {/* Manchas de colores de fondo */}
       <div className="fixed inset-0 flex items-center justify-center pointer-events-none opacity-20 z-0">
-        <div className="w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-2xl"></div>
-        <div className="w-96 h-96 bg-indigo-800 rounded-full mix-blend-multiply filter blur-2xl -ml-20"></div>
+        {/* <div className="w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-2xl"></div>
+        <div className="w-96 h-96 bg-indigo-800 rounded-full mix-blend-multiply filter blur-2xl -ml-20"></div> */}
       </div>
 
       {/* Contenido principal */}
@@ -40,11 +40,11 @@ const HomePage = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-yellow-500 mix-blend-multiply opacity-50"></div>
           </div>
-          <div className="absolute -bottom-4 -left-4 w-40 h-40 bg-blue-500 rounded-full mix-blend-multiply filter blur-sm -z-10"></div>
+          {/* <div className="absolute -bottom-4 -left-4 w-40 h-40 bg-blue-500 rounded-full mix-blend-multiply filter blur-sm -z-10"></div>
           <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-800 rounded-full mix-blend-multiply filter blur-sm"></div>
 
           <div className="absolute -buttom-8 -right-4 w-40 h-40 bg-blue-600 rounded-full mix-blend-multiply filter blur-sm"></div>
-          <div className="absolute -top-8 -left-4 w-16 h-16 bg-blue-500 rounded-full mix-blend-multiply filter blur-sm -z-10"></div>
+          <div className="absolute -top-8 -left-4 w-16 h-16 bg-blue-500 rounded-full mix-blend-multiply filter blur-sm -z-10"></div> */}
         </div>
       </div>
     </div>

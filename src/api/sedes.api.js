@@ -25,17 +25,6 @@ export const getSedeById = async (id) => {
 };
 
 
-// // Agregar una nueva sede
-// export const addSede = async (sedeData) => {
-//   try {
-//     const response = await axios.post(API_URL, sedeData);
-//     return response.data; // Devuelve la sede creada
-//   } catch (error) {
-//     console.error("Error al agregar sede:", error);
-//     throw error; // Lanza el error para manejarlo en el componente
-//   }
-// };
-
 export const addSede = async (sedeData) => {
     // Crear un objeto FormData
     const formData = new FormData();
