@@ -1,11 +1,9 @@
 import { Plus } from 'lucide-react'
 import useAuthStore from '../stores/AuthStore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import SedeCard from '../components/SedeCard'
 import useSedesStore from '../stores/useSedesStore'
-import SedeForm from './SedeFrom'
 import { useNavigate } from 'react-router-dom'
-import { getSedeById } from '../api/sedes.api'
 import { AlertCircle } from "lucide-react";
 
 
@@ -13,7 +11,7 @@ import { AlertCircle } from "lucide-react";
 const SedesPage = () => {
   const { isLoggedIn } = useAuthStore()
   const { sedes, fetchSedes } = useSedesStore();
-  const [currentSede, setCurrentSede] = useState(null);
+ 
   const navigate = useNavigate()
 
 
