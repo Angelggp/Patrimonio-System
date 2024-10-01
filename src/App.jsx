@@ -11,6 +11,10 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import InfoSede from "./pages/SedeInfo";
 import SedeForm from "./pages/SedeFrom";
+import InfoFacultadPage from "./pages/FacultadPage";
+import InfoAreaSedePage from "./pages/AreaSedePage";
+import FacultadForm from "./pages/FacultadForm";
+import AboutPage from "./pages/AboutPage";
 import { Toaster } from "react-hot-toast";
 
 
@@ -29,6 +33,10 @@ function App() {
               <Route path="/sedes/:id" element={<InfoSede />} />
               <Route path="/sedes/add" element={<SedeForm />} />
               <Route path="/sedes/edit/:id" element={<SedeForm />} />
+              <Route path="/facultad/:id" element={<InfoFacultadPage />} />
+              <Route path="/facultad/add" element={<FacultadForm />} />
+              <Route path="/area/:id" element={<InfoAreaSedePage />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Navigate to="/homepage" />} />
             </Routes>

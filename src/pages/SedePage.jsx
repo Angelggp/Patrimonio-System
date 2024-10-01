@@ -50,7 +50,7 @@ const SedesPage = () => {
           <div className="space-y-6">
           {sedes.length === 0 ? ( 
               <p className="flex text-gray-500 text-lg">
-                <AlertCircle className=" w-8" />  No hay sedes registradas en el sistema.
+                <AlertCircle className=" w-8" />  No hay sedes registradas en el sistema
               </p>
             ) : (
               sedes.map((sede) => (

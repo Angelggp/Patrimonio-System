@@ -128,7 +128,13 @@ const NavItems = ({
             }`}>
               <Link
                 to="/sedes"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => {
+                  if (isMobile) {
+                    setLocalShowSedes(false);
+                  } else {
+                    setShowSedes(false);
+                  }
+                }}>
                  Todas las sedes
               </Link>
             {sedes.map((sede) => (
