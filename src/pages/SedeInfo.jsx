@@ -2,44 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useSedesStore from '../stores/useSedesStore'; 
 import { ChevronDown } from 'lucide-react';
-import { getFacultadesSede } from '../api/facultades.api';
 import useFacultadesStore from '../stores/useFacultadesStore';
 
 const InfoSede = () => {
   const { id } = useParams(); 
   const { sedes } = useSedesStore(); 
+  const { facultades } = useFacultadesStore()
   const [activeTab, setActiveTab] = useState(null);
   const [sede, setSede] = useState(null); 
   const [error, setError] = useState(null); 
 
-  const { facultades, fetchFacultades } = useFacultadesStore()
-
-  // const [facultades, setFacultades] = useState([])
-
-  // useEffect(() => {
-  //   const fetchFacultades = async () => {
-  //     try {
-  //       const listadoFacultades = await getFacultadesSede(id);
-  //       if (listadoFacultades && listadoFacultades.length > 0) {
-  //         setFacultades(listadoFacultades);
-          
-  //         setError(''); // Limpiar el mensaje de error si hay facultades
-  //       } else {
-  //         setError('No hay facultades asociadas a esta sede.');
-  //       }
-  //     } catch (err) {
-  //       setError('Error al obtener las facultades: ' + err.message);
-  //     }
-  //   };
-
-  //   fetchFacultades();
-  // }, [id]);
-
-  useEffect(() => {
-    const cargar = fetchFacultades(id)
-    console.log(id)
-  }, [])
-  console.log(facultades)
 
   useEffect(() => {
     // Filtra la sede correspondiente al id de la URL
