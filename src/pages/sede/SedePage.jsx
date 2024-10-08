@@ -1,11 +1,11 @@
 import { Plus } from 'lucide-react'
-import useAuthStore from '../stores/AuthStore'
+import useAuthStore from '../../stores/AuthStore'
 import { useEffect, useState } from 'react'
-import SedeCard from '../components/SedeCard'
-import useSedesStore from '../stores/useSedesStore'
+import SedeCard from '../../components/SedeCard'
+import useSedesStore from '../../stores/useSedesStore'
 import SedeForm from './SedeFrom'
 import { useNavigate } from 'react-router-dom'
-import { getSedeById } from '../api/sedes.api'
+import { getSedeById } from '../../api/sedes.api'
 import { AlertCircle } from "lucide-react";
 
 
@@ -49,8 +49,8 @@ const SedesPage = () => {
           </div>
           <div className="space-y-6">
           {sedes.length === 0 ? ( 
-              <p className="flex text-gray-500 text-lg">
-                <AlertCircle className=" w-8" />  No hay sedes registradas en el sistema
+              <p className="flex text-red-500 text-lg">
+                <AlertCircle className=" w-8 text-red-500" />  No hay sedes registradas en el sistema
               </p>
             ) : (
               sedes.map((sede) => (

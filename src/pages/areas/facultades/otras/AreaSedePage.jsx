@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import useAreasStore from "../stores/useAreasStore"
+import useAreasStore from "../../../../stores/useAreasStore"
 import { FileText, Building, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
+import ArrowLeftButton from '../../../../components/ArrowLeftButtom'
 
 export default function InfoAreaSedePage() {
   const { id } = useParams()
@@ -11,6 +12,7 @@ export default function InfoAreaSedePage() {
 
   useEffect(() => {
     fetchAreas()
+    window.scrollTo(0, 0);
   }, [fetchAreas])
 
   const area = areas.find(a => a.id === parseInt(id))
@@ -25,13 +27,7 @@ export default function InfoAreaSedePage() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 mt-16 sm:px-6 lg:px-8">
-        <button
-          onClick={handleReturn}
-          className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Volver a la Sede
-        </button>
+        <ArrowLeftButton handleReturn = {handleReturn} text={'Volver a la Sedes'}/>
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       
         <div className="px-4 py-5 sm:px-6">

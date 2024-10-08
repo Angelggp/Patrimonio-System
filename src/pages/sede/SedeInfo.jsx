@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import useSedesStore from "../stores/useSedesStore";
+import useSedesStore from "../../stores/useSedesStore";
 import { ChevronDown, AlertCircle, Plus, ArrowLeft } from "lucide-react";
-import useFacultadesStore from "../stores/useFacultadesStore";
-import useAreasStore from "../stores/useAreasStore";
-import useAuthStore from "../stores/AuthStore";
-
+import useFacultadesStore from "../../stores/useFacultadesStore";
+import useAreasStore from "../../stores/useAreasStore";
+import useAuthStore from "../../stores/AuthStore";
+import ArrowLeftButton from "../../components/ArrowLeftButtom";
 
 const InfoSede = () => {
   const { id } = useParams();
@@ -13,84 +13,67 @@ const InfoSede = () => {
   const { facultades, fetchFacultades } = useFacultadesStore();
   const { areas, fetchAreas } = useAreasStore();
   const { isLoggedIn } = useAuthStore();
+
   const [activeTab, setActiveTab] = useState(null);
   const [sede, setSede] = useState(null);
   const [error, setError] = useState(null);
   const [showTooltipA, setShowTooltipA] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const [facultadesSede, setFacultadesSede] = useState([]);
-  const [areasSedes, setAreasSedes] = useState([]);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleAddFacultad = () => {
-    // Lógica para agregar una nueva facultad
-    navigate('/facultad/add')
-    console.log("Agregar nueva facultad");
+    navigate(`/sedes/${id}/addFacultad/`);
   };
 
   const handleAddArea = (e) => {
     e.stopPropagation();
-    // Logic to add a new area
-    console.log("Agregar nueva área");
+    // Lógica para agregar una nueva área
   };
 
   useEffect(() => {
-    fetchFacultades();
-  }, [fetchFacultades]);
+    const fetchData = async () => {
+      await fetchFacultades();
+      await fetchAreas();
+    };
+
+    fetchData();
+  }, [fetchFacultades, fetchAreas]);
+
 
   useEffect(() => {
-    fetchAreas();
-  }, [fetchAreas]);
-  console.log(areasSedes);
-
-  useEffect(() => {
-    // Filtrar las facultades que pertenecen a la sede especificada
-    const filteredFacultades = facultades.filter(
-      (facultad) => facultad.sede.id === parseInt(id)
-    );
-    setFacultadesSede(filteredFacultades);
-  }, [facultades, id]);
-
-  useEffect(() => {
-    // Filtrar las areas que pertenecen a la sede especificada
-    const filteredAreas = areas.filter((a) => a.sede.id === parseInt(id));
-    setAreasSedes(filteredAreas);
-  }, [areas, id]);
-
-  useEffect(() => {
-    // Filtra la sede correspondiente al id de la URL
-    const selectedSede = sedes.find((s) => s.id === parseInt(id)); // Convierte id a número
+    const selectedSede = sedes.find((s) => s.id === parseInt(id));
     if (selectedSede) {
       setSede(selectedSede);
     } else {
-      setError("No se encontró la sede."); // Manejo del caso donde no se encuentra la sede
+      setError("No se encontró la sede.");
     }
-  }, [id, sedes]); // Dependencias: id y sedes
+  }, [id, sedes]);
+
+  const facultadesSede = facultades.filter(
+    (facultad) => facultad.sede_info.id === parseInt(id)
+  );
+
+  const areasSedes = areas.filter((area) => area.sede.id === parseInt(id));
 
   const toggleTab = (tab) => {
     setActiveTab(activeTab === tab ? null : tab);
   };
 
   const handleReturn = () => {
-    navigate('/sedes')
-  }
+    navigate("/sedes");
+  };
 
-
-  if (error) return <div>{error}</div>; // Muestra un mensaje de error si ocurre
-  if (!sede) return <div>Cargando...</div>; // Muestra un mensaje de carga mientras se obtiene la sede
+  if (error) return <div>{error}</div>;
+  if (!sede) return <div>Cargando...</div>;
 
   return (
     <div className="min-h-screen flex flex-col bg-white relative overflow-x-hidden">
       <main className="flex-grow container mx-auto px-4 py-12 relative z-10 mt-16">
-      <button
-          onClick={handleReturn}
-          className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Volver al listado de sedes
-        </button>
+        <ArrowLeftButton
+          handleReturn={handleReturn}
+          text={"Volver al listado de Sedes"}
+        />
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <img
             src={sede.imagen}
@@ -122,23 +105,23 @@ const InfoSede = () => {
               <div>
                 <button
                   onClick={() => toggleTab("areas")}
-                  className="w-full flex justify-between items-center bg-gray-100 p-4 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors duration-200">
+                  className="w-full flex justify-between items-center bg-gray-100 p-3 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors duration-200">
                   <span className="text-lg font-semibold text-gray-800">
                     Áreas
                   </span>
                   <div className="flex items-center">
                     {isLoggedIn && (
                       <div className="relative">
-                        <button
-                          onClick={handleAddArea}
+                        <span
                           onMouseEnter={() => setShowTooltipA(true)}
                           onMouseLeave={() => setShowTooltipA(false)}
-                          className="mr-2 p-1 rounded-full hover:bg-gray-300 focus:outline-none transition-colors duration-200"
-                          aria-label="Agregar área">
+                          className="flex items-center justify-center w-8 h-8 mr-2 rounded-full bg-gray-100 hover:bg-gray-300 transition-colors duration-200 cursor-pointer"
+                          aria-label="Agregar área"
+                          onClick={handleAddArea}>
                           <Plus className="h-5 w-5 text-gray-600" />
-                        </button>
+                        </span>
                         {showTooltipA && (
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg">
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-1 bg-gray-800 text-white text-xs rounded shadow-lg">
                             Agregar área
                           </div>
                         )}
@@ -151,6 +134,7 @@ const InfoSede = () => {
                     />
                   </div>
                 </button>
+
                 {activeTab === "areas" && (
                   <ul className="mt-2 space-y-2 pl-4">
                     {areasSedes.length === 0 ? (
@@ -164,7 +148,7 @@ const InfoSede = () => {
                       areasSedes.map((area) => (
                         <li
                           key={area.id}
-                          className="text-gray-600 hover:text-gray-800 transition-colors duration-200">
+                          className="text-gray-600 hover:underline transition-all duration-200">
                           <Link to={`/area/${area.id}`} className="block py-1">
                             {area.nombre_area}
                           </Link>
@@ -176,27 +160,25 @@ const InfoSede = () => {
               </div>
               <div>
                 <div>
-                  <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <button
-                      onClick={() => toggleTab("facultades")}
-                      className="flex-grow text-left focus:outline-none">
-                      <span className="text-lg font-semibold text-gray-800">
-                        Facultades
-                      </span>
-                    </button>
+                  <button
+                    onClick={() => toggleTab("facultades")}
+                    className="w-full flex justify-between items-center bg-gray-100 p-3 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors duration-200">
+                    <span className="text-lg font-semibold text-gray-800">
+                      Facultades
+                    </span>
                     <div className="flex items-center">
                       {isLoggedIn && (
                         <div className="relative">
-                          <button
-                            onClick={handleAddFacultad}
+                          <span
                             onMouseEnter={() => setShowTooltip(true)}
                             onMouseLeave={() => setShowTooltip(false)}
-                            className="mr-2 p-1 rounded-full hover:bg-gray-300 focus:outline-none transition-colors duration-200"
-                            aria-label="Agregar facultad">
+                            className="flex items-center justify-center w-8 h-8 mr-2 rounded-full bg-gray-100 hover:bg-gray-300 transition-colors duration-200 cursor-pointer"
+                            aria-label="Agregar facultad"
+                            onClick={handleAddFacultad}>
                             <Plus className="h-5 w-5 text-gray-600" />
-                          </button>
+                          </span>
                           {showTooltip && (
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg">
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-1 bg-gray-800 text-white text-xs rounded shadow-lg">
                               Agregar facultad
                             </div>
                           )}
@@ -208,7 +190,8 @@ const InfoSede = () => {
                         }`}
                       />
                     </div>
-                  </div>
+                  </button>
+
                   {activeTab === "facultades" && (
                     <ul className="mt-2 space-y-2 pl-4">
                       {facultadesSede.length === 0 ? (
@@ -222,9 +205,9 @@ const InfoSede = () => {
                         facultadesSede.map((facultad) => (
                           <li
                             key={facultad.id}
-                            className="text-gray-600 hover:text-gray-800 transition-colors duration-200">
+                            className="text-gray-600 hover:text-gray-800 transition-colors duration-200 hover:underline">
                             <Link
-                              to={`/facultad/${facultad.id}`}
+                              to={`/sedes/${id}/facultad/${facultad.id}`}
                               className="block py-1">
                               {facultad.nombre_facultad}
                             </Link>
@@ -235,6 +218,13 @@ const InfoSede = () => {
                   )}
                 </div>
               </div>
+              <Link to={"/docentes"} className="block py-1">
+                <div className="w-full flex justify-between items-center bg-gray-100 p-3 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors duration-200">
+                  <span className=" text-gray-600 hover:text-gray-800 transition-colors duration-200 font-bold">
+                    Docentes
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -30,13 +30,3 @@ export const loginUser = async (username, password) => {
     }
 };
 
-const fetchUserData = async (userId) => {
-    try {
-        const response = await axios.get(`${API_URL}${userId}/`); // Ajusta la URL según tu API
-        setUser(response.data.username); // Asume que la respuesta contiene el campo 'username'
-    } catch (error) {
-        console.error("Error al obtener los datos del usuario:", error);
-    } finally {
-        setLoading(false);
-    }
-};

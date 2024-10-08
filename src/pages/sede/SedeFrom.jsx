@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { addSede, editSede, getSedeById } from '../api/sedes.api';
+import { addSede, editSede, getSedeById } from '../../api/sedes.api';
 import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -123,7 +123,7 @@ const SedeForm = () => {
   const labelClasses = "block text-md font-bold text-gray-600";
 
   return (
-    <div className="max-w-2xl mx-auto p-4 mt-20 mb-20">
+    <div className="max-w-2xl h-full mx-auto p-4 mt-20 mb-20">
       <h2 className="text-2xl font-bold mb-4">{ id ? 'Editar Sede' : 'Agregar Nueva Sede'}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nombre de la Sede */}
