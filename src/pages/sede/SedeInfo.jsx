@@ -28,7 +28,7 @@ const InfoSede = () => {
 
   const handleAddArea = (e) => {
     e.stopPropagation();
-    // Lógica para agregar una nueva área
+    navigate(`/sedes/${id}/addAreaSede/`);
   };
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const InfoSede = () => {
     (facultad) => facultad.sede_info.id === parseInt(id)
   );
 
-  const areasSedes = areas.filter((area) => area.sede.id === parseInt(id));
+  const areasSedes = areas.filter((area) => area.sede_info.id === parseInt(id));
 
   const toggleTab = (tab) => {
     setActiveTab(activeTab === tab ? null : tab);
@@ -63,6 +63,8 @@ const InfoSede = () => {
   const handleReturn = () => {
     navigate("/sedes");
   };
+
+  console.log(areas)
 
   if (error) return <div>{error}</div>;
   if (!sede) return <div>Cargando...</div>;
@@ -149,7 +151,7 @@ const InfoSede = () => {
                         <li
                           key={area.id}
                           className="text-gray-600 hover:underline transition-all duration-200">
-                          <Link to={`/area/${area.id}`} className="block py-1">
+                          <Link to={`/sedes/${id}/areaSede/${area.id}`} className="block py-1">
                             {area.nombre_area}
                           </Link>
                         </li>

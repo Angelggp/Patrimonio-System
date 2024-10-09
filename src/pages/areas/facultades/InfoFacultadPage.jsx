@@ -23,7 +23,6 @@ export default function InfoFacultadPage() {
   const [showDescription, setShowDescription] = useState(false);
   const { isLoggedIn } = useAuthStore();
 
-  console.log(idSede, idFacultad)
 
   useEffect(() => {
     fetchFacultades();
@@ -54,7 +53,7 @@ export default function InfoFacultadPage() {
           </h1>
           {isLoggedIn && (
             <Link to={`/sedes/${idSede}/editFacultad/${idFacultad}`} className="block py-1">
-              <Edit className="ml-2 h-5 w-5 text-gray-400 hover:text-green-500 transition-all duration-200" />
+              <Edit className="ml-2 h-5 w-5 text-gray-400 hover:text-green-500 transition-all duration-100" />
             </Link>
           )}
         </div>

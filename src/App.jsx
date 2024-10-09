@@ -14,6 +14,7 @@ import SedeForm from "./pages/sede/SedeFrom";
 import InfoFacultadPage from "./pages/areas/facultades/InfoFacultadPage";
 import InfoAreaSedePage from "./pages/areas/facultades/otras/AreaSedePage";
 import FacultadForm from "./pages/areas/facultades/FacultadForm";
+import AreaSedeForm from "./pages/areas/facultades/otras/AreaSedeFrom";
 import AboutPage from "./pages/about/AboutPage";
 import DocentesPage from "./pages/docentes/DocentesPage";
 import { Toaster } from "react-hot-toast";
@@ -37,7 +38,9 @@ function App() {
               <Route path="/sedes/:idSede/facultad/:idFacultad" element={<InfoFacultadPage />} />
               <Route path="/sedes/:idSede/addFacultad" element={<FacultadForm />} />
               <Route path="/sedes/:idSede/editFacultad/:idFacultad" element={<FacultadForm />} />
-              <Route path="/area/:id" element={<InfoAreaSedePage />} />
+              <Route path="/sedes/:idSede/areaSede/:idAreaSede" element={<InfoAreaSedePage />} /> {/* ##### */}
+              <Route path="/sedes/:idSede/addAreaSede" element={<AreaSedeForm />} />
+              <Route path="/sedes/:idSede/editAreaSede/:idAreaSede" element={<AreaSedeForm />} />
               <Route path="/docentes" element={<DocentesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/login" element={<Login />} />
